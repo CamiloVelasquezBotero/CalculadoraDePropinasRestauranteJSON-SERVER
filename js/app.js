@@ -17,7 +17,7 @@ function guardarCliente() {
     const mesa = document.querySelector('#mesa').value;
     const hora = document.querySelector('#hora').value;
 
-    const camposVacios = [ mesa, hora].some( campo => campo === ''); // Si almenos uno tiene un campo vacio
+    const camposVacios = [ mesa, hora].some( campo => campo === ''); // Se verifica si tiene campos vacios
     if (camposVacios) {
         // Verificar si ya existe la alerta
         const existeAlerta = document.querySelector('.invalid-feedback');
@@ -29,9 +29,9 @@ function guardarCliente() {
             
             setTimeout( () => {
                 alerta.remove();
-            }, 3000); // Se eliminara la alerta despues de 3 segundos
+            }, 3000);
         }
-        return; // Gracias a este return nos ahorramos el else
+        return;
     }
 
     // Asignar datos del formulario a cliente
@@ -39,7 +39,7 @@ function guardarCliente() {
 
     // Ocultar el modal
     const modalFormulario = document.querySelector('#formulario');
-    // obtenemos una instancia ds bootstrap para poder controlarlo y no solo sea html
+    // obtenemos una instancia ds bootstrap
     const modalBootstrap = bootstrap.Modal.getInstance(modalFormulario);
     // Usamos la instancia de bootstrap y escondemos el modal
     modalBootstrap.hide();
@@ -70,7 +70,7 @@ function mostrarPlatillos(platillos) {
         const row = document.createElement('DIV'); // Creamos una fila para el platillo
         row.classList.add('row', 'py-3', 'border-top');
 
-        const nombre = document.createElement('DIV'); // Creamos una columna que lleve el nombre
+        const nombre = document.createElement('DIV');
         nombre.classList.add('col-md-4');
         nombre.textContent = platillo.nombre;
         const precio = document.createElement('DIV');
@@ -80,15 +80,15 @@ function mostrarPlatillos(platillos) {
         categoria.classList.add('col-md-3');
         categoria.textContent = categorias[platillo.categoria]; // Filtra la categorias dependiendo al numero
 
-        const inputCantidad = document.createElement('INPUT'); // Creamos la informacion para la cantidad
-        inputCantidad.type = 'number'; // De tipo number para que cree el input de tipo numerico de cantidad
-        inputCantidad.min = 0; // El valor minimo que podra elegirse
-        inputCantidad.value = 0; // Esto para que no aparezca vacio y empiece desde el 0
-        inputCantidad.id = `producto-${platillo.id}`; // Le agregamos el id como atributo
+        const inputCantidad = document.createElement('INPUT');
+        inputCantidad.type = 'number';
+        inputCantidad.min = 0; 
+        inputCantidad.value = 0;
+        inputCantidad.id = `producto-${platillo.id}`;
         inputCantidad.classList.add('form-control');
         // Funcion que detecta la cantidad y el platillo que se esta agregando
         inputCantidad.onchange = function () {
-            const cantidad = parseInt(inputCantidad.value); // Convertimos el numero de string a entero
+            const cantidad = parseInt(inputCantidad.value);
             agregarPlatillo({...platillo, cantidad});
         }
 
@@ -102,7 +102,7 @@ function mostrarPlatillos(platillos) {
         row.appendChild(categoria);
         row.appendChild(agregar);
 
-        // finalmente le agregamos la fila al contenido
+        // agregamos la fila al contenido
         contenido.appendChild(row); 
     })
 }
@@ -120,12 +120,12 @@ function agregarPlatillo(producto) {
                 if(articulo.id === producto.id) {
                     articulo.cantidad = producto.cantidad;
                 }
-                return articulo; // retornamos el articulo para que lo vaya agregando al nuevo arrayActualizado
+                return articulo;
             });
             // Se le asigna el nuevo Array a cliente.pedido con la cantidad del producto actualizada
             cliente.pedido = [...pedidoActualizado];
         }else {
-            // El articulo no existe, le agregamos al array el procto
+            // El articulo no existe, le agregamos al array el producto
             cliente.pedido = [...pedido, producto];
         }
     }else {
@@ -370,7 +370,6 @@ function calcularPropina() {
         subtotal += articulo.cantidad * articulo.precio;
     })
 
-    // Extraemos el value del radio que tenga el name propina y que este seleccionado
     const propinaSeleccionada = document.querySelector('[name="propina"]:checked').value;
 
     // Calcular propina
